@@ -14,9 +14,9 @@ layout: compress
       {{ site.short_title }}
     </title>
 
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="{{ site.baseurl }}{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     {% for url in page.styleUrls %}
-      <link rel="stylesheet" href="{{ url | append: '.css?v=' | append: site.github.build_revision | relative_url }}">
+      <link rel="stylesheet" href="{{ site.baseurl }}{{ url | append: '.css?v=' | append: site.github.build_revision | relative_url }}">
     {% endfor %} 
 
     <!--[if lt IE 9]>
