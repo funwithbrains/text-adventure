@@ -1,12 +1,12 @@
 title: Text Adventure
 short_title: Text Adventure
 description: Text Adventure
-baseurl: ""
-url: "https://text-adventure.github.io"
+baseurl: "/text-adventure"
+url: "https://funwithbrains.github.io/text-adventure/"
 repository: funwithbrains/text-adventure.github.io.git
 
 markdown: kramdown
-gems:
+plugins:
   - jekyll-feed
 exclude:
   - Gemfile
