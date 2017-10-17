@@ -9,7 +9,7 @@ layout: compress
 
     <title>
       {% if page.title %}
-        {{ page.title | slugify: 'none' }} - 
+        {{ page.title }} - 
       {% endif %}
       {{ site.short_title }}
     </title>
@@ -54,12 +54,12 @@ layout: compress
 
     <script type="text/javascript">
         var require = {
-          baseUrl: "/assets/scripts/",
+          baseUrl: "{{ site.baseurl }}/assets/scripts/",
           paths: {
             'jquery': '/assets/scripts/utils/imports/jquery'
           }
         };
     </script>
-    <script type="text/javascript" data-main="{{ page.mainScript }}" src="/assets/scripts/utils/imports/require.js"></script>
+    <script type="text/javascript" data-main="{{ site.baseurl }}{{ page.mainScript }}" src="{{ site.baseurl }}/assets/scripts/utils/imports/require.js"></script>
   </body>
 </html>
