@@ -1,0 +1,28 @@
+---
+layout: default
+---
+
+<p class="esnext-warning">This page uses recent additions to the JavaScript language. If you do not use a modern browser, the code on this page will not work.</p>
+
+<div class="text-adventure">
+  <div class="event panel"></div>
+
+  <div class="column">
+    <div class="row no-growth">
+      <div class="map panel">
+        <div data-bind="html: map"></div>
+      </div>
+
+      <div class="room panel" data-bind="with: currentRoom">
+          <div>Value: <span data-bind="text: value()"></span></div>
+          <div>Fertility: <span data-bind="text: fertility()"></span></div>
+          <div>Elevation: <span data-bind="text: elevation()"></span></div>
+          <div>Temperature: <span data-bind="text: temperature()"></span></div>
+          <div>Humidity: <span data-bind="text: humidity()"></span></div>
+          <div>Type: <span data-bind="text: type()"></span></div>
+        </div>
+      </div>
+    
+      <div class="action panel"></div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+title: Text Adventure
+short_title: Text Adventure
+description: Text Adventure
+baseurl: ""
+url: "https://text-adventure.github.io"
+repository: funwithbrains/text-adventure.github.io.git
+
+markdown: kramdown
+gems:
+  - jekyll-feed
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - private
+  - .vscode
+
+compress_html:
+  clippings: all
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      mainScript: "/assets/scripts/main.js"
