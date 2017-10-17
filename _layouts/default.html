@@ -14,10 +14,7 @@ layout: compress
       {{ site.short_title }}
     </title>
 
-    <link rel="stylesheet" href="{{ site.baseurl }}{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    {% for url in page.styleUrls %}
-      <link rel="stylesheet" href="{{ site.baseurl }}{{ url | append: '.css?v=' | append: site.github.build_revision | relative_url }}">
-    {% endfor %} 
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -26,7 +23,7 @@ layout: compress
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   </head>
   <body>
-    <a id="header" href="{{ site.baseurl }}/">{{ site.title }}</a>
+    <a id="header" href="{{ '/'  | relative_url }}">{{ site.title }}</a>
     
     <div id="main">
       {% if page.title %}
@@ -54,12 +51,12 @@ layout: compress
 
     <script type="text/javascript">
         var require = {
-          baseUrl: "{{ site.baseurl }}/assets/scripts/",
+          baseUrl: "{{ '/assets/scripts/' | relative_url }}",
           paths: {
-            'jquery': '/assets/scripts/utils/imports/jquery'
+            "jquery": "{{ '/assets/scripts/utils/imports/jquery' | relative_url }}"
           }
         };
     </script>
-    <script type="text/javascript" data-main="{{ site.baseurl }}{{ page.mainScript }}" src="{{ site.baseurl }}/assets/scripts/utils/imports/require.js"></script>
+    <script type="text/javascript" data-main="{{ page.mainScript | relative_url }}" src="{{ '/assets/scripts/utils/imports/require.js' | relative_url }}"></script>
   </body>
 </html>
