@@ -18,7 +18,7 @@ exclude:
 collections:
   about:
     output: true
-    permalink: /:collection/:name/
+    permalink: /:collection/:path/
 
 compress_html:
   clippings: all
