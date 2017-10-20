@@ -12,29 +12,25 @@ html {
   font-family: $font-primary;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 #header {
   display: block;
   margin: 0px;
-  padding: 2px 30px;
+  padding: 4px;
 
-  border: solid $color-primary;
-  @include border-radius(0px);
-  border-width: 4px 0px;
-  background-color: $color-primary-dark;
-  
-  text-align: right;
-  font-family: $font-decorative;
   text-decoration: none;
   color: $color-positive;
 
   &:hover {
-    border-color: $color-primary-light;
-    background-color: $color-primary;
+    background-color: $color-negative-highlight;
   }
 
   &:active {
-    border-color: $color-primary;
-    background-color: $color-primary-dark;
+    background-color: $color-negative-standout;
   }
 }
 
@@ -45,7 +41,6 @@ html {
   width: 640px;
   min-height: 800px;
   overflow: auto; // prevent margin collapsing
-  @include border-radius(0px 0px 16px 16px);
   background-color: $color-negative;
 
   #main-header {
@@ -57,18 +52,12 @@ html {
       padding: 0.2em 1em;
       background-color: $color-negative-off;
       font-size: 200%;
-      @include border-radius(0px 0px 8px 8px);
     }
   }
 }
 
 #footer {
   margin: 40px auto 10px;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
 }
 
 #main {

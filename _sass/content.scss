@@ -1,7 +1,6 @@
 @import 'utils';
 
 a {
-  @include border-radius(0.25em);
   color: $color-primary;
 
   &:visited { color: $color-positive; }
@@ -54,7 +53,6 @@ blockquote {
   margin: 8px 64px;
   padding: 8px;
   border: solid 2px $color-secondary-dark;
-  @include border-radius(12px);
   background: $color-secondary-dark-desaturated;
   color: $color-negative;
 
@@ -81,7 +79,6 @@ hr {
   border: 2px solid $color-primary-dark-desaturated;
   border-top: 0px;
   border-left: 0px;
-  @include border-radius(4px);
 }
 
 table {

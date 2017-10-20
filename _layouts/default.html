@@ -26,16 +26,7 @@ layout: compress
     <a id="header" href="{{ '/'  | relative_url }}">{{ site.title }}</a>
     
     <div id="main">
-      {% if page.title %}
-        <div id="main-header">
-          <span>{{ page.title }}</span>
-        </div>
-      {% endif %}
-
       {{ content }}
-    </div>
-
-    <div id="footer">
     </div>
 
     {% if site.google_analytics %}

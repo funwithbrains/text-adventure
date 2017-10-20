@@ -4,10 +4,10 @@ $color-positive: #fff;
 
 $color-negative: #000;
 $color-negative-off: #111;
-$color-negative-standout: #444;
 $color-negative-highlight: #222;
+$color-negative-standout: #444;
 
-$color-primary: #3344ff;
+$color-primary: #8888ff;
 $color-primary-light: lighten($color-primary, $color-brightness-variance);
 $color-primary-light-desaturated: desaturate($color-primary-light, $color-saturation-variance);
 $color-primary-dark: darken($color-primary, $color-brightness-variance);
@@ -18,14 +18,7 @@ $color-secondary-light: lighten($color-secondary, $color-brightness-variance);
 $color-secondary-dark: darken($color-secondary, $color-brightness-variance);
 $color-secondary-dark-desaturated: desaturate($color-secondary-dark, $color-saturation-variance);
 
-@mixin border-radius($radius) {
-  -webkit-border-radius: $radius;
-  -moz-border-radius: $radius;
-  -ms-border-radius: $radius;
-  border-radius: $radius;
-}
-
-$font-primary: Arial, Helvetica, sans-serif;
+$font-primary: Courier New, Courier, monospace;
 $font-secondary: 'Times New Roman', Times, serif;
-$font-decorative: Courier New, Courier, monospace;
+$font-decorative: Arial, Helvetica, sans-serif;
 
