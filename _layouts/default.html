@@ -22,10 +22,22 @@ layout: compress
 
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   </head>
-  <body>
-    <a id="header" href="{{ '/'  | relative_url }}">{{ site.title }}</a>
+  <body class="column">
+    <div class="no-growth row">
+      <div id="header" class="cell">
+        <a href="{{ '/'  | relative_url }}">{{ site.title }}</a>
+      </div>
+
+      <div id="navigation" class="cell row">
+        {% for nav_item in site.data.nav_items %}
+          <div class="cell">
+            <a href="{{ nav_item.url | relative_url }}">{{ nav_item.name }}</a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
     
-    <div id="main">
+    <div id="main" class="cell column">
       {{ content }}
     </div>
 

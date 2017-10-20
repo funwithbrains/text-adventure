@@ -53,14 +53,14 @@ blockquote {
   margin: 8px 64px;
   padding: 8px;
   border: solid 2px $color-secondary-dark;
-  background: $color-secondary-dark-desaturated;
+  background-color: $color-secondary-dark-desaturated;
   color: $color-negative;
 
   p { margin: 16px; }
 
   blockquote {
     margin: 8px;
-    background: $color-negative;
+    background-color: $color-negative;
     color: $color-positive;
   }
 }
@@ -79,24 +79,6 @@ hr {
   border: 2px solid $color-primary-dark-desaturated;
   border-top: 0px;
   border-left: 0px;
-}
-
-table {
-  margin: 0px auto;
-  padding: 2px;
-
-  td {
-    display: inline-block;
-    margin: 2px 4px;
-    min-width: 5em;
-    min-height: 5em;
-
-    background-color: $color-negative-standout;
-  }
-
-  td:hover {
-    background-color: $color-negative-highlight;
-  }
 }
 
 .align {

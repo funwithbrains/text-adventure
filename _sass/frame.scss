@@ -7,14 +7,17 @@
 }
 
 html {
+  height: 100%;
+  width: 100%;
+
   background-color: $color-negative-off;
   color: $color-positive;
   font-family: $font-primary;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  width: 100%;
 }
 
 #header {
@@ -22,83 +25,70 @@ body {
   margin: 0px;
   padding: 4px;
 
-  text-decoration: none;
-  color: $color-positive;
-
-  &:hover {
-    background-color: $color-negative-highlight;
+  a {
+    text-decoration: none;
+    color: $color-positive;
   }
+}
 
-  &:active {
-    background-color: $color-negative-standout;
+#navigation {
+  font-size: 75%;
+  text-align: right;
+
+  .cell {
+    margin: 4px;
+  }
+  
+  a {
+    padding: 4px;
+
+    text-decoration: none;
+    color: $color-positive-faded;
   }
 }
 
 #main {
   position: relative;
-  margin: 0px auto -2em;
-  padding: 0px 0px;
-  width: 640px;
-  min-height: 800px;
-  overflow: auto; // prevent margin collapsing
+  margin: 0px 8px 8px;
+  padding: 4px 4px;
+  
   background-color: $color-negative;
-
-  #main-header {
-    text-align: center;
-    
-    span {
-      font-family: $font-secondary;
-      
-      padding: 0.2em 1em;
-      background-color: $color-negative-off;
-      font-size: 200%;
-    }
-  }
 }
 
-#footer {
-  margin: 40px auto 10px;
-}
-
-#main {
+.column {
   display: flex;
   flex-direction: column;
-  flex: auto 1 1;
-  margin: 0px 32px;
-  height: auto!important;
-  width: auto!important;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.cell {
+  flex: 1 1 auto;
+}
+
+.minimal {
+  flex: 1 1 0;
+}
+
+.no-growth {
+  flex-grow: 0;
+  flex-basis: auto;
 }
 
 .text-adventure {
-  display: flex;
-  margin: 8px;
-  padding: 8px;
-  flex: 1 1 auto;
+  margin: 4px;
+  padding: 4px;
 
-  font-family: Courier New, Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
 
   .panel {
     margin: 8px;
     padding: 8px;
     flex: 1 1 0;
     border: silver 3px outset;
-  }
-
-  .column {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 0;
-  }
-
-  .row {
-    display: flex;
-    flex-direction: row;
-    flex: 1 1 0;
-  }
-
-  .no-growth {
-    flex-grow: 0;
-    flex-basis: auto;
   }
 
   .map {
