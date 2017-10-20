@@ -15,6 +15,8 @@ A class can be learned:
 * through rituals
 * through happenstance
 
+----
+
 ### Mechanically
 
 A class is a list of five passive abilities which can influence travel and combat in various ways.
