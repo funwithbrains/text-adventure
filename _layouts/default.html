@@ -39,17 +39,5 @@ layout: compress
         ga('send', 'pageview');
       </script>
     {% endif %}
-
-    {% if page.useScripts %}
-      <script type="text/javascript">
-          var require = {
-            baseUrl: "{{ '/assets/scripts/' | relative_url }}",
-            paths: {
-              "jquery": "{{ '/assets/scripts/utils/imports/jquery' | relative_url }}"
-            }
-          };
-      </script>
-      <script type="text/javascript" data-main="{{ page.mainScript | relative_url }}" src="{{ '/assets/scripts/utils/imports/require.js' | relative_url }}"></script>
-    {% endif %}
   </body>
 </html>
