@@ -1,7 +1,7 @@
 define(['utils', './roomModel'], (utils, { createRoomModel }) => {
   const { _, ko, math, jQuery } = utils;
 
-  const createRoomSource = (seed) => {
+  const createSource = (worldConfig) => {
     const savedRoomModels = {};
     const getRoomModel = (x, y) => {
       // TODO load from long-saved data
@@ -22,6 +22,6 @@ define(['utils', './roomModel'], (utils, { createRoomModel }) => {
   };
 
   return {
-    createRoomSource
+    createSource
   };
 });

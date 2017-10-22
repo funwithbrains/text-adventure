@@ -1,8 +1,11 @@
 requirejs([
   'utils', 'siteData', 'game/index'
 ], (utils, siteData, gameIndex) => {
+
+  // TEMP
   window.utils = utils;
   window.siteData = siteData;
+  window.rng = new utils.seedrandom('');
 
   const { _, ko, jQuery } = utils;
 
@@ -18,7 +21,6 @@ requirejs([
 
   const world = gameIndex.worldIndex.createWorld('Earth');
   window.world = world;// TEMP
-  const getRoom = world.roomSource.getRoom;
 
   const xPosition = ko.observable(0);
   const yPosition = ko.observable(0);

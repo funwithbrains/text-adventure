@@ -3,7 +3,7 @@ define(['utils', 'siteData'], ({ _, seedrandom }, siteData) => {
   const minimumFantasy = 0;
   const maximumFantasy = 100;
 
-  const getSpread = (rng, min, max) => {
+  const rollSpread = (rng, min, max) => {
     const midpointBase = rng.double();
     const midpoint = midpointBase * midpointBase * (max - min);
     const radius = rng.double() * (max - min) * 0.75;
@@ -13,14 +13,13 @@ define(['utils', 'siteData'], ({ _, seedrandom }, siteData) => {
     };
   };
   
-  const createSource = world => {
-    const { seed } = world;
-    const rng = new seedrandom(seed);
+  const createSource = (worldConfig) => {
+    const rng = new seedrandom(worldConfig.seed + 'race');
 
     const {
       min: minFantasy,
       max: maxFantasy 
-    } = getSpread(rng, minimumFantasy, maximumFantasy);
+    } = rollSpread(rng, minimumFantasy, maximumFantasy);
 
     const {
       races,
@@ -39,7 +38,7 @@ define(['utils', 'siteData'], ({ _, seedrandom }, siteData) => {
 
     const civilityDeviation = rng.double() * 20 - 10;
     
-    const getOne = () => {
+    const roll = () => { // TODO seed this directly for determinism
       const weightedPosition = rng.double() * totalWeight;
       let passedWeight = 0;
       for (let i = 0; i < races.length; ++i) {
@@ -56,7 +55,7 @@ define(['utils', 'siteData'], ({ _, seedrandom }, siteData) => {
       minFantasy,
       maxFantasy,
       races,
-      getOne,
+      roll,
       createSource // TEMP
     };
   };

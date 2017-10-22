@@ -1,9 +1,14 @@
-define(['utils', './race/index', './roomSource/index'], (utils, Race, roomSourceIndex) => {
-  const createWorld = (seed) => {
-    const world = { seed };
+define([
+  'utils', './name/index', './race/index', './room/index'
+], (
+  utils, Name, Race, Room
+) => {
+  window.Name = Name; // TEMP
 
-    const raceSource = Race.createSource(world);
-    const roomSource = roomSourceIndex.createRoomSource(seed);
+  const createWorld = (worldConfig) => {
+    const nameSource = Name.createSource(worldConfig);
+    const raceSource = Race.createSource(worldConfig);
+    const roomSource = Room.createSource(worldConfig);
 
     // TODO
     // create World and WorldModel
@@ -12,10 +17,11 @@ define(['utils', './race/index', './roomSource/index'], (utils, Race, roomSource
     // World has Layers which are lazily generated
     // Layer has Rooms which are generated at Layer creation time.
 
-    world.raceSource = raceSource;
-    world.roomSource = roomSource;
-
-    return world;
+    return {
+      nameSource,
+      raceSource,
+      roomSource
+    };
   };
 
   return {
