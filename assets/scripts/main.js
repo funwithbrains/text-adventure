@@ -1,6 +1,7 @@
 requirejs([
   'utils', 'siteData', 'game/index'
 ], (utils, siteData, gameIndex) => {
+  window.utils = utils;
   window.siteData = siteData;
 
   const { _, ko, jQuery } = utils;
@@ -15,7 +16,8 @@ requirejs([
     // TODO insert in order of effect
   };
 
-  const world = gameIndex.worldIndex.createWorld('');
+  const world = gameIndex.worldIndex.createWorld('Earth');
+  window.world = world;// TEMP
   const getRoom = world.roomSource.getRoom;
 
   const xPosition = ko.observable(0);

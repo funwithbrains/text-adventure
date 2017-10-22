@@ -1,5 +1,8 @@
-define(['utils', './roomSource/index'], (utils, roomSourceIndex) => {
+define(['utils', './race/index', './roomSource/index'], (utils, Race, roomSourceIndex) => {
   const createWorld = (seed) => {
+    const world = { seed };
+
+    const raceSource = Race.createSource(world);
     const roomSource = roomSourceIndex.createRoomSource(seed);
 
     // TODO
@@ -9,9 +12,10 @@ define(['utils', './roomSource/index'], (utils, roomSourceIndex) => {
     // World has Layers which are lazily generated
     // Layer has Rooms which are generated at Layer creation time.
 
-    return {
-      roomSource
-    };
+    world.raceSource = raceSource;
+    world.roomSource = roomSource;
+
+    return world;
   };
 
   return {
