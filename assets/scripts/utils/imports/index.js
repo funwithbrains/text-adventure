@@ -1,10 +1,13 @@
 define([
-  './lodash', './knockout', './seedrandom', 'jquery'
+  './lodash', './knockout', './seedrandom', 'jquery',
+  './yaml'
+  // YAML gets dumped into the global namespace,
+  // but since it's temporary we'll leave it there.
 ], function (_, ko, seedrandom, jQuery) {
   return {
-    _: _,
-    ko: ko,
-    seedrandom: seedrandom,
-    jQuery: jQuery
+    _,
+    ko,
+    seedrandom,
+    jQuery
   };
 });
