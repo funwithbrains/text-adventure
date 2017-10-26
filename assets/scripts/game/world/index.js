@@ -1,14 +1,15 @@
 define([
-  'utils', './name/index', './race/index', './room/index'
+  'utils', './name/index', './race/index', './room/index', './faction/index'
 ], (
-  utils, Name, Race, Room
+  utils, Name, Race, Room, Faction
 ) => {
   window.Name = Name; // TEMP
 
   const createWorld = (worldConfig) => {
     const nameSource = Name.createSource(worldConfig);
-    const raceSource = Race.createSource(worldConfig);
+    const raceSystem = Race.createSystem(worldConfig);
     const roomSource = Room.createSource(worldConfig);
+    const factionSystem = Faction.createSystem(worldConfig, raceSystem);
 
     // TODO
     // create World and WorldModel
@@ -19,8 +20,9 @@ define([
 
     return {
       nameSource,
-      raceSource,
-      roomSource
+      raceSystem,
+      roomSource,
+      factionSystem
     };
   };
 

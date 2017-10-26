@@ -31,7 +31,7 @@ Troll:
   fantasy: 40
   civility: 60
 Fairy:
-  weight: 50
+  weight: 10
   fantasy: 80
   civility: 70
 Penguin:

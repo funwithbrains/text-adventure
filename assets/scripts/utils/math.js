@@ -1,4 +1,10 @@
 define(['./imports/index'], ({ seedrandom }) => {
+  const clamp = (min, max, value) => {
+    if (value < min) { return min; }
+    if (value > max) { return max; }
+    return value;
+  };
+
   const interpolateLinear = (a, b, t) => a + t * (b - a);
   const interpolateCubic = (a, b, t) => a + (3 - 2 * t) * t * t * (b - a);
 
@@ -7,7 +13,7 @@ define(['./imports/index'], ({ seedrandom }) => {
       return rng.quick();
   };
 
-  var getSingleNoise = (x, y, entropy) => {
+  const getSingleNoise = (x, y, entropy) => {
     const xInt = Math.floor(x);
     const yInt = Math.floor(y);
     const x0y0 = getRandom(xInt, yInt, entropy);
@@ -62,10 +68,12 @@ define(['./imports/index'], ({ seedrandom }) => {
     );
   };
 
-  return {
-    getRandom: getRandom,
-    interpolateCubic: interpolateCubic,
-    getSingleNoise: getSingleNoise,
-    getNoiseField: getNoiseField
-  };
+  return Object.freeze({
+    clamp,
+    getRandom,
+    interpolateLinear,
+    interpolateCubic,
+    getSingleNoise,
+    getNoiseField
+  });
 });

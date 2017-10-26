@@ -1,7 +1,26 @@
-define(['utils', 'siteData'], ({ _, seedrandom }, siteData) => {
-  const possibleRaces = siteData.game.world.races;
+define(['utils', 'siteData'], ({ _, seedrandom, collection, math }, siteData) => {
+  const possibleRaces = _.map(siteData.game.world.races, ({
+    weight,
+    fantasy,
+    civility
+  }, name) => {
+    return { name, weight, fantasy, civility };
+  });
+  const fullSampler = collection.createWeightedSampler(possibleRaces);
+  const elementSampler = collection.createWeightedSampler(siteData.game.world.elements);
+  
+  const finalizeRaceName = (rng, name) => {
+    return name.replace(/#\{race\}/g, match => {
+      return finalizeRaceName(rng, fullSampler.sample(rng).name);
+    }).replace(/#\{element\}/g, match => {
+      return elementSampler.sample(rng).name;
+    });
+  };
+
   const minimumFantasy = 0;
   const maximumFantasy = 100;
+  const minimumCivility = 0;
+  const maximumCivility = 100;
 
   const rollSpread = (rng, min, max) => {
     const midpointBase = rng.double();
@@ -13,7 +32,7 @@ define(['utils', 'siteData'], ({ _, seedrandom }, siteData) => {
     };
   };
   
-  const createSource = (worldConfig) => {
+  const createSystem = (worldConfig) => {
     const rng = new seedrandom(worldConfig.seed + 'race');
 
     const {
@@ -21,46 +40,44 @@ define(['utils', 'siteData'], ({ _, seedrandom }, siteData) => {
       max: maxFantasy 
     } = rollSpread(rng, minimumFantasy, maximumFantasy);
 
-    const {
-      races,
-      totalWeight
-    } = _.reduce(possibleRaces, (memo, properties, name) => {
-      if (minFantasy <= properties.fantasy && properties.fantasy <= maxFantasy) {
-        memo.races.push({ name, properties });
-        memo.totalWeight += properties.weight;
-      }
-  
-      return memo;
-    }, {
-      races: [],
-      totalWeight: 0
+    const civilityDeviation = rng.double() * 100;
+
+    const races = possibleRaces.filter(race => {
+      return minFantasy <= race.fantasy && race.fantasy <= maxFantasy;
     });
 
-    const civilityDeviation = rng.double() * 20 - 10;
+    const minCivility = races.reduce((memo, race) => {
+      return memo < race.civility ? memo : race.civility;
+    }, maximumCivility);
+    const maxCivility = races.reduce((memo, race) => {
+      return memo > race.civility ? memo : race.civility;
+    }, minimumCivility);
     
-    const roll = () => { // TODO seed this directly for determinism
-      const weightedPosition = rng.double() * totalWeight;
-      let passedWeight = 0;
-      for (let i = 0; i < races.length; ++i) {
-        passedWeight += races[i].properties.weight;
-        if (passedWeight > weightedPosition) {
-          return races[i];
-        }
-      }
+    const createSampler = (civility) => {
+      civility = math.clamp(minCivility, maxCivility, civility);
+      const allowedRaces = races.filter(race => {
+        return Math.abs(race.civility - civility) < civilityDeviation;
+      });
 
-      throw new Error('The race weights are inconsistent.');
+      const localSampler = collection.createWeightedSampler(allowedRaces);
+
+      return {
+        sample: (rng) => {
+          // TODO get other properties, not just name
+          return finalizeRaceName(rng, localSampler.sample(rng).name);
+        }
+      };
     };
 
     return {
       minFantasy,
       maxFantasy,
       races,
-      roll,
-      createSource // TEMP
+      createSampler
     };
   };
 
   return {
-    createSource
+    createSystem
   };
 });

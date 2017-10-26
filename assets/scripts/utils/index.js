@@ -1,6 +1,10 @@
 define([
-  './imports/index', './math', './strings', './functions', './tune'
-], ({ _, ko, seedrandom, jQuery, Tone }, math, strings, functions, tune) => {
+  './imports/index',
+  './math', './collection', './strings', './functions', './tune'
+], (
+  { _, ko, seedrandom, jQuery, Tone },
+  math, collection, strings, functions, tune
+) => {
   return {
     _,
     ko,
@@ -9,6 +13,7 @@ define([
     Tone,
 
     math,
+    collection,
     strings,
     functions,
     tune
