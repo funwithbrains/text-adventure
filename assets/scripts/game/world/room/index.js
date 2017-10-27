@@ -12,7 +12,7 @@ define(['utils', './roomModel'], (utils, { createRoomModel }) => {
       }
   
       return (
-        savedRoomModels[roomIndex] = createRoomModel(x, y, {})
+        savedRoomModels[roomIndex] = createRoomModel(x, y, {}, worldConfig)
       );
     };
 
