@@ -119,11 +119,11 @@ Tree-Folk:
   fantasy: 45
   civility: 70
 "#{race}-#{race}":
-  weight: 20
+  weight: 80
   fantasy: 80
   civility: 50
 "#{element} Elemental":
-  weight: 10
+  weight: 30
   fantasy: 95
   civility: 50
 Slime:
@@ -131,7 +131,7 @@ Slime:
   fantasy: 40
   civility: 30
 "#{element} Slime":
-  weight: 25
+  weight: 35
   fantasy: 60
   civility: 30
 Ooze:
@@ -139,11 +139,11 @@ Ooze:
   fantasy: 40
   civility: 20
 "#{element} Ooze":
-  weight: 15
+  weight: 25
   fantasy: 60
   civility: 20
 "#{element} #{race}":
-  weight: 15
+  weight: 65
   fantasy: 70
   civility: 50
 Angel:
