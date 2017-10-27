@@ -19,17 +19,21 @@ requirejs([
     // TODO insert in order of effect
   };
 
-  const world = gameIndex.worldIndex.createWorld('Earth');
+  const seed = ko.observable('Earth');
+  const world = ko.computed(() => gameIndex.worldIndex.createWorld({
+    seed: seed()
+  }));
   window.world = world;// TEMP
 
   const xPosition = ko.observable(0);
   const yPosition = ko.observable(0);
   const currentRoom = ko.pureComputed(() => {
-    return world.roomSource.getRoomModel(xPosition(), yPosition());
+    return world().roomSource.getRoomModel(xPosition(), yPosition());
   });
 
   const mapRange = 8;
   const map = ko.pureComputed(() => {
+    const w = world();
     const x = xPosition();
     const y = yPosition();
     const minX = x - mapRange;
@@ -43,7 +47,7 @@ requirejs([
         if (i === x && j === y) {
           htmlMap += 'o';
         } else {
-          htmlMap += world.roomSource.getRoomModel(i, j).typeIcon();
+          htmlMap += w.roomSource.getRoomModel(i, j).typeIcon();
         }
       }
 
@@ -71,7 +75,7 @@ requirejs([
 
     const destinationX = xPosition() + deltaX;
     const destinationY = yPosition() + deltaY;
-    const destinationRoom = world.roomSource.getRoomModel(destinationX, destinationY);
+    const destinationRoom = world().roomSource.getRoomModel(destinationX, destinationY);
 
     if (isPassable(destinationRoom)) {
       xPosition(destinationX);
@@ -95,6 +99,7 @@ requirejs([
   
   setTimeout(() => {
     ko.applyBindings({
+      seed,
       currentRoom,
       map
     }, document.querySelector('body'));
