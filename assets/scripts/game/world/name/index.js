@@ -1,46 +1,33 @@
-define(['utils'], ({ _, seedrandom }) => {
-  const peopleNames = 'adam,alex,alexander,alexandra,allan,amanda,amelia,andrea,angelo,ann,annie,arthur,athena,beck,becky,beth,betty,betsy,benjamin,bill,brian,cain,catherine,cindy,cronus,dan,dana,daniel,danielle,dave,david,deborah,delilah,donald,donatello,edgar,eliza,elizabeth,eric,erica,eve,ezekiel,francine,frank,franklin,fredrick,gaia,gary,george,glen,goliath,guinevere,gwen,gwendolyn,hades,hank,harriet,harry,hera,hermes,hermione,james,jan,jane,janet,janie,janus,jeff,jeffery,jeffry,jen,jenny,jesus,jill,jillian,jim,jimmy,john,juno,ian,irma,kane,kyle,larry,leon,leonardo,link,liz,lizzie,lisa,lionel,louis,louie,luigi,lucifer,lucy,maria,marie,mario,martin,mary,matt,mathew,maximilian,maxwell,mercury,michael,michelangelo,mickey,micky,mike,minerva,mindy,mitchel,mona,morgan,morgana,murray,neptune,olivia,ollie,pam,pamela,pat,patty,patricia,peach,peter,pluto,poseidon,raphael,raymond,rebekah,rose,rosalyn,ryan,sally,samantha,samson,samuel,samus,sandra,sarah,scarlet,scott,sean,silvia,simon,sophia,sophie,stanley,stephanie,steven,sylvia,ted,teddy,theodore,thomas,timmy,timothy,tom,tony,uranus,valerie,vanessa,victor,wade,waldo,wayne,william,willy,zelda,zeus'.split(',');
-
-  const sample = (rng, items) => {
-    return items[Math.floor(rng.quick() * items.length)];
-  };
-
-  const sampleRange = (rng, min, max) => min + Math.floor(rng.quick() * (max - min));
-
-  const createMarkovGenerator = (strings, order) => {
-    const beginnings = [];
-    const table = {};
-    strings.forEach(string => {
-      beginnings.push(string.slice(0, order));
-      const end = string.length - order;
-      for (let i = 0; i < end; ++i) {
-        const key = string.slice(i, i + order);
-        if (!table[key]) {
-          table[key] = [];
-        }
-        table[key].push(string[i + order]);
+define(['utils'], ({ _, seedrandom, string }) => {
+  const { createMarkovGenerator, createBackOffGenerator } = string;
+  
+  // TODO get a proper name database and generate cultural contexts when making a faction's name generator
+  const names = {
+    myth: {
+      roman: {
+        genderedFemale: 'juno minerva tellus terra venus'.split(' '),
+        genderedMale: 'janus jupiter neptune pluto ulysses'.split(' ')
+      },
+      greek: {
+        genderedFemale: 'aphrodite athena gaea gaia hera'.split(' '),
+        genderedMale: 'cronus hades hermes odysseus poseidon zeus'.split(' ')
       }
-    });
-
-    return {
-      strings,
-      order,
-      beginnings,
-      table,
-      create: (rng, minLength = 3, maxLength = 8) => {
-        const length = sampleRange(rng, minLength, maxLength);
-        let string = sample(rng, beginnings);
-        while (string.length < length) {
-          const items = table[string.slice(-order)];
-          if (!items) { break; }
-
-          string += sample(rng, items);
-        }
-
-        return string;
-      }
-    };
+    },
+    american: {
+      genderedFemale: 'alexandra amanda amelia andrea angela ann annie becky beth betty betsy catharine catherine cathy cindy daisy danielle deborah delilah eliza elizabeth emilia emily emma erica eve francine guinevere gwen gwendolyn hanna hannah harriet helga hermione hilda irma jan jane janet janie jen jenifer jennifer jenny jill jillian kate katharine katherine kathy liz lizzie lisa lucy maria marie mary mindy molly mona morgana olivia pam pamela patty patricia peach rebekah rose rosalyn sally samantha samus sandra sara sarah scarlet silvia sophia sophie stephanie sylvia tina valerie vanessa zelda zoe'.split(' '),
+      genderedMale: 'adam alexander allan angelo arthur benjamin bill brian cain dale dan daniel dave david donald donatello edgar eric ezekiel frank franklin fredrick gary george glen goliath hank harry james jeff jeffery jeffry jesus jim jimmy john ian kane kyle larry leon leonardo link lionel louis louie luigi lucifer mario martin matt mathew maximilian maxwell mercury michael michelangelo mickey micky mike mitchel morton murray ollie peter raphael raymond rob robby robert richard rick ryan samson samuel scott sean simon stanley steven ted teddy theodore thomas timmy timothy tom tony uranus victor wade waldo wayne william willy'.split(' '),
+      genderedNeutral: 'alex beck dana morgan pat sam sammy'.split(' ')
+    }
   };
+  const peopleNames = _.flatten([
+    names.myth.greek.genderedFemale,
+    names.myth.greek.genderedMale,
+    names.myth.roman.genderedFemale,
+    names.myth.roman.genderedMale,
+    names.american.genderedFemale,
+    names.american.genderedMale,
+    names.american.genderedNeutral
+  ]);
 
   const peopleNameGenerator = createMarkovGenerator(peopleNames, 2);
 
@@ -51,15 +38,15 @@ define(['utils'], ({ _, seedrandom }) => {
     for (let i = 0; i < 32; ++i) {
       rootNames.push(peopleNameGenerator.create(rng, 5, 12));
     }
-    const localGenerator = createMarkovGenerator(rootNames, 2);
+    const localGenerator = createBackOffGenerator(rootNames, 2, 5);
 
     return {
       localGenerator,
       roll: () => { // TODO seed this directly for determinism
-        return localGenerator.create(rng);
+        return localGenerator.create(rng, 3, 8);
       },
       rollList: () => { // TODO seed this directly for determinism
-        return _.range(32).map(() => localGenerator.create(rng));
+        return _.range(32).map(() => localGenerator.create(rng, 3, 8));
       }
     };
   };
