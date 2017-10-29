@@ -2,6 +2,7 @@ define(['./imports/index', './math'], ({ _ }, { sample, sampleRange }) => {
   const createMarkovSource = (strings, order) => {
     const beginnings = [];
     const table = {};
+    const endingTable = {};
 
     strings.forEach(string => {
       beginnings.push(string.slice(0, order));
@@ -13,11 +14,18 @@ define(['./imports/index', './math'], ({ _ }, { sample, sampleRange }) => {
         }
         table[key] += string[i + order];
       }
+
+      const endingKey = string.slice(-order - 1, -1);
+      if (!endingTable[endingKey]) {
+        endingTable[endingKey] = '';
+      }
+      endingTable[endingKey] += string[string.length - 1];
     });
 
     return {
       beginnings,
-      table
+      table,
+      endingTable
     };
   };
 
@@ -49,33 +57,46 @@ define(['./imports/index', './math'], ({ _ }, { sample, sampleRange }) => {
       return createMarkovSource(strings, order);
     });
 
+    const create = (rng, minLength, maxLength) => {
+      const length = sampleRange(rng, minLength, maxLength);
+
+      let order = minOrder;
+      let string = sample(rng, sources[order - minOrder].beginnings);
+
+      while (string.length < length) {
+        const source = sources[order - minOrder];
+        const key = string.slice(-order);
+
+        if (length - string.length <= order && source.endingTable[key]) {
+          string += sample(rng, source.endingTable[key]);
+        } else {
+          const items = source.table[key];
+          if (items) {
+            string += sample(rng, items);
+            if (order < maxOrder) {
+              order += 1;
+            }
+          } else {
+            order -= 1;
+            if (order < minOrder) { break; }
+          }
+        }
+      }
+
+      return string;
+    };
+
+    const createList = (rng, minLength, maxLength, count) => {
+      return _.range(count).map(() => create(rng, minLength, maxLength));
+    };
+
     return {
       strings,
       minOrder,
       maxOrder,
       sources,
-      create: (rng, minLength, maxLength) => {
-        const length = sampleRange(rng, minLength, maxLength);
-
-        let order = sampleRange(rng, minOrder, maxOrder);
-        let string = sample(rng, sources[order - minOrder].beginnings);
-        while (string.length < length) {
-          const items = sources[order - minOrder].table[string.slice(-order)];
-          if (!items) {
-            order -= 1;
-            if (order < minOrder) { break; }
-
-            continue;
-          }
-
-          string += sample(rng, items);
-          if (order < maxOrder) {
-            order += 1;
-          }
-        }
-
-        return string;
-      }
+      create,
+      createList
     };
   };
 

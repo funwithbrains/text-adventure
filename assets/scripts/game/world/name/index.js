@@ -29,24 +29,24 @@ define(['utils'], ({ _, seedrandom, string }) => {
     names.american.genderedNeutral
   ]);
 
-  const peopleNameGenerator = createMarkovGenerator(peopleNames, 2);
+  const peopleNameGenerator = createBackOffGenerator(peopleNames, 2, 4);
 
   const createSource = (worldConfig) => {
     // TODO allow multiple different generators for different cultural contexts
     const rng = new seedrandom(worldConfig.seed + 'name');
     const rootNames = [];
-    for (let i = 0; i < 32; ++i) {
-      rootNames.push(peopleNameGenerator.create(rng, 5, 12));
+    for (let i = 0; i < 50; ++i) {
+      rootNames.push(peopleNameGenerator.create(rng, 3, 12));
     }
     const localGenerator = createBackOffGenerator(rootNames, 2, 5);
 
     return {
       localGenerator,
-      roll: () => { // TODO seed this directly for determinism
-        return localGenerator.create(rng, 3, 8);
+      roll: (rng) => {
+        return localGenerator.create(rng, 3, 12);
       },
-      rollList: () => { // TODO seed this directly for determinism
-        return _.range(32).map(() => localGenerator.create(rng, 3, 8));
+      rollList: (rng, count) => {
+        return localGenerator.createList(rng, 3, 12, count);
       }
     };
   };
