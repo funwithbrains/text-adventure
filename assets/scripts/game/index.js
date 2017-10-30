@@ -1,5 +1,83 @@
-define(['./world/index'], (worldIndex) => {
+define(['utils', './world/index'], ({ ko }, World) => {
+  const isPassable = room => {
+    const type = room.type();
+    if (type === 'water' || type === 'trench') {
+      return false;
+    }
+
+    return true;
+  };
+
+  const create = () => {
+    const seed = ko.observable('Earth');
+    const world = ko.computed(() => World.create({
+      seed: seed()
+    }));
+
+    const position = ko.observable({ x: 0, y: 0});
+    var lastMoveTime = 0;
+    const moveDelay = 100;
+    const move = (deltaX, deltaY) => {
+      const now = Date.now();
+      if (lastMoveTime + moveDelay > now) { return; }
+  
+      const { x, y } = position();
+      const destinationX = x + deltaX;
+      const destinationY = y + deltaY;
+      const destinationRoom = world().roomSource.getRoomModel(destinationX, destinationY);
+  
+      if (isPassable(destinationRoom)) {
+        lastMoveTime = now;
+
+        position({
+          x: destinationX,
+          y: destinationY
+        });
+      }
+    };
+  
+    const currentRoom = ko.pureComputed(() => {
+      const { x, y } = position();
+      return world().roomSource.getRoomModel(x, y);
+    });
+
+    const mapRange = 8;
+    const map = ko.pureComputed(() => {
+      const w = world();
+      const { x, y } = position();
+      const minX = x - mapRange;
+      const maxX = x + 1 + mapRange;
+      const minY = y - mapRange;
+      const maxY = y + 1 + mapRange;
+      var htmlMap = '';
+  
+      for (var j = minY; j < maxY; ++j) {
+        for (var i = minX; i < maxX; ++i) {
+          if (i === x && j === y) {
+            htmlMap += 'o';
+          } else {
+            htmlMap += w.roomSource.getRoomModel(i, j).typeIcon();
+          }
+        }
+  
+        htmlMap += '<br />';
+      }
+  
+      return htmlMap;
+    });
+
+    window.world = world; // TEMP
+
+    return {
+      seed,
+      world,
+      map,
+      move,
+      currentRoom
+    };
+  };
+
   return {
-    worldIndex
+    create
   };
 });

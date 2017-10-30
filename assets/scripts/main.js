@@ -1,13 +1,13 @@
 requirejs([
   'utils', 'siteData', 'game/index'
-], (utils, siteData, gameIndex) => {
+], (utils, siteData, Game) => {
 
   // TEMP
   window.utils = utils;
   window.siteData = siteData;
   window.rng = new utils.seedrandom('');
 
-  const { _, ko, jQuery } = utils;
+  const { ko, jQuery } = utils;
 
   const esnextWarnings = document.querySelectorAll('.esnext-warning');
   esnextWarnings.forEach(warning => {
@@ -19,69 +19,8 @@ requirejs([
     // TODO insert in order of effect
   };
 
-  const seed = ko.observable('Earth');
-  const world = ko.computed(() => gameIndex.worldIndex.createWorld({
-    seed: seed()
-  }));
-  window.world = world;// TEMP
-
-  const xPosition = ko.observable(0);
-  const yPosition = ko.observable(0);
-  const currentRoom = ko.pureComputed(() => {
-    return world().roomSource.getRoomModel(xPosition(), yPosition());
-  });
-
-  const mapRange = 8;
-  const map = ko.pureComputed(() => {
-    const w = world();
-    const x = xPosition();
-    const y = yPosition();
-    const minX = x - mapRange;
-    const maxX = x + 1 + mapRange;
-    const minY = y - mapRange;
-    const maxY = y + 1 + mapRange;
-    var htmlMap = '';
-
-    for (var j = minY; j < maxY; ++j) {
-      for (var i = minX; i < maxX; ++i) {
-        if (i === x && j === y) {
-          htmlMap += 'o';
-        } else {
-          htmlMap += w.roomSource.getRoomModel(i, j).typeIcon();
-        }
-      }
-
-      htmlMap += '<br />';
-    }
-
-    return htmlMap;
-  });
-
-  const isPassable = room => {
-    const type = room.type();
-    if (type === 'water' || type === 'trench') {
-      return false;
-    }
-
-    return true;
-  };
-
-  var lastMoveTime = 0;
-  const moveDelay = 100;
-  const move = (deltaX, deltaY) => {
-    const now = Date.now();
-    if (lastMoveTime + moveDelay > now) { return; }
-    lastMoveTime = now;
-
-    const destinationX = xPosition() + deltaX;
-    const destinationY = yPosition() + deltaY;
-    const destinationRoom = world().roomSource.getRoomModel(destinationX, destinationY);
-
-    if (isPassable(destinationRoom)) {
-      xPosition(destinationX);
-      yPosition(destinationY);
-    }
-  };
+  const game = Game.create();
+  const { move } = game;
 
   // TODO design input shortcuts for actual game commands
   jQuery('body').on('keydown', (e) => {
@@ -98,10 +37,6 @@ requirejs([
   });
   
   setTimeout(() => {
-    ko.applyBindings({
-      seed,
-      currentRoom,
-      map
-    }, document.querySelector('body'));
+    ko.applyBindings(game, document.querySelector('body'));
   }, 100);
 });

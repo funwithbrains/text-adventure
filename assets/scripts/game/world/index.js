@@ -5,7 +5,7 @@ define([
 ) => {
   window.Name = Name; // TEMP
 
-  const createWorld = (worldConfig) => {
+  const create = (worldConfig) => {
     const nameSource = Name.createSource(worldConfig);
     const raceSystem = Race.createSystem(worldConfig);
     const roomSource = Room.createSource(worldConfig);
@@ -27,6 +27,6 @@ define([
   };
 
   return {
-    createWorld
+    create
   };
 });
