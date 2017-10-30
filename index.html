@@ -2,18 +2,35 @@
 title: "Main"
 ---
 
-<p class="esnext-warning">This page uses recent additions to the JavaScript language. If you do not use a modern browser, the code on this page will not work.</p>
+<div class="text-adventure cell row" data-bind="template: mode()">
+  <p class="warning">This page uses recent additions to the JavaScript language. If you do not use a modern browser, the code on this page will not work.</p>
+</div>
 
-<div class="text-adventure cell row">
-  <div class="event panel"></div>
+<script id="mainMenu" type="text/html">
+  <div class="minimal column main-menu">
+    <div class="cell">
+      <label>
+        Seed:
+        <input type="text" data-bind="value: seed" />
+      </label>
+    </div>
+    <div class="cell">
+      <button data-bind="click: startGameplay">Start Game</button>
+    </div>
+  </div>
+</script>
 
-  <div class="minimal column">
-    <div class="minimal row no-growth">
-      <div class="map panel">
-        <div data-bind="html: map"></div>
-      </div>
+<script id="gameplay" type="text/html">
+  <div class="minimal row gameplay">
+    <div class="event panel"></div>
 
-      <div class="room panel" data-bind="with: currentRoom">
+    <div class="minimal column">
+      <div class="minimal row no-growth">
+        <div class="map panel">
+          <div data-bind="html: map"></div>
+        </div>
+
+        <div class="room panel" data-bind="with: currentRoom">
           <div>Value: <span data-bind="text: value()"></span></div>
           <div>Fertility: <span data-bind="text: fertility()"></span></div>
           <div>Elevation: <span data-bind="text: elevation()"></span></div>
@@ -24,15 +41,10 @@ title: "Main"
       </div>
     
       <div class="action panel">
-        <div>
-          <label>
-            Seed:
-            <input type="text" data-bind="value: seed" />
-          </label>
-        </div>
       </div>
     </div>
-</div>
+  </div>
+</script>
 
 <script type="text/javascript">
   var require = {

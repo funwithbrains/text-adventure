@@ -9,11 +9,6 @@ requirejs([
 
   const { ko, jQuery } = utils;
 
-  const esnextWarnings = document.querySelectorAll('.esnext-warning');
-  esnextWarnings.forEach(warning => {
-    warning.remove();
-  });
-
   const actions = [];
   const act = () => {
     // TODO insert in order of effect

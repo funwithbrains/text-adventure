@@ -9,10 +9,20 @@ define(['utils', './world/index'], ({ ko }, World) => {
   };
 
   const create = () => {
+    // TODO create MainMenu to encapsulate menu logic
+    const mode = ko.observable('mainMenu');
+    const startGameplay = () => {
+      mode('gameplay');
+    };
+
     const seed = ko.observable('Earth');
-    const world = ko.computed(() => World.create({
-      seed: seed()
-    }));
+    const world = ko.computed(() => {
+      if (mode() !== 'gameplay') { return null; }
+
+      return World.create({
+        seed: seed()
+      });
+    });
 
     const position = ko.observable({ x: 0, y: 0});
     var lastMoveTime = 0;
@@ -37,13 +47,18 @@ define(['utils', './world/index'], ({ ko }, World) => {
     };
   
     const currentRoom = ko.pureComputed(() => {
+      const w = world();
+      if (!w) { return null; }
+
       const { x, y } = position();
-      return world().roomSource.getRoomModel(x, y);
+      return w.roomSource.getRoomModel(x, y);
     });
 
     const mapRange = 8;
     const map = ko.pureComputed(() => {
       const w = world();
+      if (!w) { return null; }
+
       const { x, y } = position();
       const minX = x - mapRange;
       const maxX = x + 1 + mapRange;
@@ -69,6 +84,9 @@ define(['utils', './world/index'], ({ ko }, World) => {
     window.world = world; // TEMP
 
     return {
+      mode,
+      startGameplay,
+
       seed,
       world,
       map,
