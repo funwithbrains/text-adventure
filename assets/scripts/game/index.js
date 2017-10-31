@@ -81,8 +81,6 @@ define(['utils', './world/index'], ({ ko }, World) => {
       return htmlMap;
     });
 
-    window.world = world; // TEMP
-
     return {
       mode,
       startGameplay,

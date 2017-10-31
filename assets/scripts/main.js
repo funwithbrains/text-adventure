@@ -17,6 +17,10 @@ requirejs([
   const game = Game.create();
   const { move } = game;
 
+  // TEMP
+  window.game = game;
+  game.world.subscribe(w => window.world = w);
+
   // TODO design input shortcuts for actual game commands
   jQuery('body').on('keydown', (e) => {
     const code = e.keyCode;
