@@ -1,13 +1,14 @@
 define([
-  'utils', './name/index', './race/index', './room/index', './faction/index'
+  'utils', './name/index', './element/index', './race/index', './room/index', './faction/index'
 ], (
-  utils, Name, Race, Room, Faction
+  utils, Name, Element, Race, Room, Faction
 ) => {
   window.Name = Name; // TEMP
 
   const create = (worldConfig) => {
     const nameSource = Name.createSource(worldConfig);
-    const raceSystem = Race.createSystem(worldConfig);
+    const elementSystem = Element.createSystem(worldConfig);
+    const raceSystem = Race.createSystem(worldConfig, elementSystem);
     const roomSource = Room.createSource(worldConfig);
     const factionSystem = Faction.createSystem(worldConfig, raceSystem);
 
@@ -20,6 +21,7 @@ define([
 
     return {
       nameSource,
+      elementSystem,
       raceSystem,
       roomSource,
       factionSystem

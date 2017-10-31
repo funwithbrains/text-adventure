@@ -1,28 +1,325 @@
-- name: "Fire"
+- key: "fire"
   weight: 100
-- name: "Air"
-  weight: 50
-- name: "Wind"
-  weight: 50
-- name: "Water"
+  names:
+  - name: "fire"
+    weight: 100
+  - name: "flame"
+    weight: 70
+  - name: "blaze"
+    weight: 30
+  - name: "sparky-spark"
+    weight: 5
+  tendencies:
+    heal: 15
+    cure: 10
+    dot: 75
+    disable: 20
+  opposites:
+  - key: "water"
+    weight: 100
+  - key: "ice"
+    weight: 100
+
+- key: "air"
+  weight: 75
+  names:
+  - name: "air"
+    weight: 100
+  - name: "wind"
+    weight: 100
+  - name: "breeze"
+    weight: 20
+  - name: "breezy-breeze"
+    weight: 5
+  tendencies:
+    heal: 50
+    cure: 75
+    dot: 25
+    disable: 30
+  opposites:
+  - key: "earth"
+    weight: 100
+  - key: nil
+    weight: 100
+
+- key: "water"
+  weight: 75
+  names:
+  - name: "water"
+    weight: 100
+  - name: "blub-blub"
+    weight: 5
+  tendencies:
+    heal: 50
+    cure: 50
+    dot: 25
+    disable: 30
+  opposites:
+  - key: "fire"
+    weight: 100
+  - key: "lightning"
+    weight: 100
+
+- key: "earth"
+  weight: 75
+  names:
+  - name: "earth"
+    weight: 100
+  - name: "rock"
+    weight: 50
+  - name: "stone"
+    weight: 50
+  - name: "dirty-dirt"
+    weight: 5
+  tendencies:
+    heal: 50
+    cure: 20
+    dot: 5
+    disable: 75
+  opposites:
+  - key: "air"
+    weight: 100
+  - key: nil
+    weight: 100
+
+- key: "ice"
   weight: 100
-- name: "Earth"
-  weight: 100
-- name: "Ice"
-  weight: 100
-- name: "Poison"
-  weight: 100
-- name: "Darkness"
+  names:
+  - name: "ice"
+    weight: 100
+  - name: "cold"
+    weight: 70
+  - name: "chill"
+    weight: 30
+  - name: "snow"
+    weight: 20
+  - name: "brrrrr"
+    weight: 5
+  tendencies:
+    heal: 5
+    cure: 10
+    dot: 35
+    disable: 80
+  opposites:
+  - key: "fire"
+    weight: 100
+
+- key: "poison"
+  weight: 75
+  names:
+  - name: "poison"
+    weight: 100
+  - name: "toxin"
+    weight: 80
+  - name: "venom"
+    weight: 40
+  - name: "weak-juice"
+    weight: 5
+  tendencies:
+    heal: 5
+    cure: 5
+    dot: 90
+    disable: 50
+  opposites:
+  - key: "life"
+    weight: 100
+  - key: "holy"
+    weight: 100
+
+- key: "lightning"
+  weight: 75
+  names:
+  - name: "lightning"
+    weight: 100
+  - name: "electricity"
+    weight: 30
+  - name: "electric"
+    weight: 15
+  - name: "bolt"
+    weight: 75
+  - name: "shock"
+    weight: 35
+  - name: "zap"
+    weight: 10
+  - name: "zappy-zap"
+    weight: 5
+  tendencies:
+    heal: 20
+    cure: 5
+    dot: 10
+    disable: 50
+  opposites:
+  - key: "water"
+    weight: 100
+  - key: "earth"
+    weight: 100
+
+- key: "light"
   weight: 25
-- name: "Shadow"
+  names:
+  - name: "light"
+    weight: 100
+  - name: "bright"
+    weight: 20
+  - name: "luminosity"
+    weight: 30
+  - name: "shine"
+    weight: 40
+  - name: "rainbow"
+    weight: 5
+  tendencies:
+    heal: 75
+    cure: 75
+    dot: 50
+    disable: 50
+  opposites:
+  - key: "shadow"
+    weight: 100
+  - key: "unholy"
+    weight: 100
+
+- key: "shadow"
   weight: 25
-- name: "Lightning"
-  weight: 50
-- name: "Light"
-  weight: 50
-- name: "Holy"
-  weight: 25
-- name: "Aether"
-  weight: 15
-- name: "Mana"
-  weight: 10
+  names:
+  - name: "shadow"
+    weight: 100
+  - name: "darkness"
+    weight: 80
+  - name: "gloom"
+    weight: 25
+  - name: "despair"
+    weight: 10
+  - name: "sorrow"
+    weight: 10
+  - name: "moping"
+    weight: 5
+  tendencies:
+    heal: 20
+    cure: 10
+    dot: 75
+    disable: 75
+  opposites:
+  - key: "light"
+    weight: 100
+  - key: "holy"
+    weight: 100
+
+- key: "holy"
+  weight: 35
+  names:
+  - name: "holy"
+    weight: 100
+  - name: "divine"
+    weight: 70
+  - name: "good"
+    weight: 20
+  - name: "angelic"
+    weight: 20
+  - name: "niceness"
+    weight: 5
+  tendencies:
+    heal: 50
+    cure: 50
+    dot: 25
+    disable: 25
+  opposites:
+  - key: "unholy"
+    weight: 100
+  - key: "shadow"
+    weight: 100
+
+- key: "unholy"
+  weight: 35
+  names:
+  - name: "unholy"
+    weight: 80
+  - name: "vile"
+    weight: 70
+  - name: "evil"
+    weight: 20
+  - name: "demonic"
+    weight: 30
+  - name: "nastiness"
+    weight: 5
+  tendencies:
+    heal: 80
+    cure: 5
+    dot: 85
+    disable: 75
+  opposites:
+  - key: "holy"
+    weight: 100
+  - key: "light"
+    weight: 100
+
+- key: "life"
+  weight: 20
+  names:
+  - name: "life"
+    weight: 100
+  - name: "spirit"
+    weight: 80
+  - name: "flesh"
+    weight: 60
+  - name: "vitality"
+    weight: 40
+  - name: "fitness"
+    weight: 5
+  tendencies:
+    heal: 80
+    cure: 60
+    dot: 60
+    disable: 40
+  opposites:
+  - key: "death"
+    weight: 100
+  - key: "unholy"
+    weight: 100
+  - key: "poison"
+    weight: 100
+
+- key: "death"
+  weight: 20
+  names:
+  - name: "death"
+    weight: 100
+  - name: "necrotic"
+    weight: 80
+  - name: "necromantic"
+    weight: 60
+  - name: "bone"
+    weight: 40
+  - name: "gravie-grave"
+    weight: 5
+  tendencies:
+    heal: 5
+    cure: 10
+    dot: 50
+    disable: 50
+  opposites:
+  - key: "life"
+    weight: 100
+  - key: "holy"
+    weight: 100
+
+- key: "magic"
+  weight: 20
+  names:
+  - name: "magic"
+    weight: 100
+  - name: "aether"
+    weight: 100
+  - name: "mana"
+    weight: 100
+  - name: "warpy-doodle"
+    weight: 5
+  tendencies:
+    heal: 50
+    cure: 50
+    dot: 50
+    disable: 50
+  opposites:
+  - key: nil
+    weight: 100
+  - key: "magic"
+    weight: 100

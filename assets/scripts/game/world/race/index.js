@@ -1,4 +1,6 @@
 define(['utils', 'siteData'], ({ _, seedrandom, collection, math }, siteData) => {
+  const { sample } = math;
+
   const possibleRaces = _.map(siteData.game.world.races, ({
     weight,
     fantasy,
@@ -7,13 +9,12 @@ define(['utils', 'siteData'], ({ _, seedrandom, collection, math }, siteData) =>
     return { name, weight, fantasy, civility };
   });
   const fullSampler = collection.createWeightedSampler(possibleRaces);
-  const elementSampler = collection.createWeightedSampler(siteData.game.world.elements);
   
-  const finalizeRaceName = (rng, name) => {
+  const finalizeRaceName = (rng, name, elementSystem) => {
     return name.replace(/#\{race\}/g, match => {
-      return finalizeRaceName(rng, fullSampler.sample(rng).name);
+      return finalizeRaceName(rng, fullSampler.sample(rng).name, elementSystem);
     }).replace(/#\{element\}/g, match => {
-      return elementSampler.sample(rng).name;
+      return sample(rng, elementSystem.elementNames);
     });
   };
 
@@ -32,7 +33,7 @@ define(['utils', 'siteData'], ({ _, seedrandom, collection, math }, siteData) =>
     };
   };
   
-  const createSystem = (worldConfig) => {
+  const createSystem = (worldConfig, elementSystem) => {
     const rng = new seedrandom(worldConfig.seed + 'race');
 
     const {
@@ -64,7 +65,7 @@ define(['utils', 'siteData'], ({ _, seedrandom, collection, math }, siteData) =>
       return {
         sample: (rng) => {
           // TODO get other properties, not just name
-          return finalizeRaceName(rng, localSampler.sample(rng).name);
+          return finalizeRaceName(rng, localSampler.sample(rng).name, elementSystem);
         }
       };
     };
