@@ -1,4 +1,10 @@
 define(['./imports/index', './math'], ({ _ }, { sample, sampleRange }) => {
+  const toNameCase = (string) => {
+    return string.replace(/(?:^|\s|-)([a-z])/g, (character) => {
+      return character.toUpperCase();
+    });
+  };
+
   const createMarkovSource = (strings, order) => {
     const beginnings = [];
     const table = {};
@@ -101,6 +107,7 @@ define(['./imports/index', './math'], ({ _ }, { sample, sampleRange }) => {
   };
 
   return {
+    toNameCase,
     createMarkovGenerator,
     createBackOffGenerator
   };

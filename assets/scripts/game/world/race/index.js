@@ -1,5 +1,6 @@
-define(['utils', 'siteData'], ({ _, seedrandom, collection, math }, siteData) => {
+define(['utils', 'siteData'], ({ _, seedrandom, string, collection, math }, siteData) => {
   const { sample } = math;
+  const { toNameCase } = string;
 
   const possibleRaces = _.map(siteData.game.world.races, ({
     weight,
@@ -65,7 +66,7 @@ define(['utils', 'siteData'], ({ _, seedrandom, collection, math }, siteData) =>
       return {
         sample: (rng) => {
           // TODO get other properties, not just name
-          return finalizeRaceName(rng, localSampler.sample(rng).name, elementSystem);
+          return toNameCase(finalizeRaceName(rng, localSampler.sample(rng).name, elementSystem));
         }
       };
     };

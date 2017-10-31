@@ -1,5 +1,5 @@
 define(['utils'], ({ _, seedrandom, string }) => {
-  const { createMarkovGenerator, createBackOffGenerator } = string;
+  const { toNameCase, createMarkovGenerator, createBackOffGenerator } = string;
   
   // TODO get a proper name database and generate cultural contexts when making a faction's name generator
   const names = {
@@ -43,10 +43,10 @@ define(['utils'], ({ _, seedrandom, string }) => {
     return {
       localGenerator,
       roll: (rng) => {
-        return localGenerator.create(rng, 3, 12);
+        return toNameCase(localGenerator.create(rng, 3, 12));
       },
       rollList: (rng, count) => {
-        return localGenerator.createList(rng, 3, 12, count);
+        return localGenerator.createList(rng, 3, 12, count).map(toNameCase);
       }
     };
   };

@@ -1,120 +1,120 @@
-Human:
+human:
   weight: 100
   fantasy: 0
   civility: 95
-Elf:
+elf:
   weight: 60
   fantasy: 30
   civility: 95
-Dwarf:
+dwarf:
   weight: 60
   fantasy: 30
   civility: 95
-Gnome:
+gnome:
   weight: 50
   fantasy: 30
   civility: 90
-Halfling:
+halfling:
   weight: 50
   fantasy: 30
   civility: 95
-Orc:
+orc:
   weight: 50
   fantasy: 30
   civility: 70
-Goblin:
+goblin:
   weight: 50
   fantasy: 30
   civility: 85
-Troll:
+troll:
   weight: 40
   fantasy: 40
   civility: 60
-Fairy:
+fairy:
   weight: 10
   fantasy: 80
   civility: 70
-Penguin:
+penguin:
   weight: 30
   fantasy: 0
   civility: 30
-Chicken:
+chicken:
   weight: 30
   fantasy: 0
   civility: 0
-Hawk:
+hawk:
   weight: 30
   fantasy: 0
   civility: 20
-Bat:
+bat:
   weight: 30
   fantasy: 0
   civility: 30
-Snake:
+snake:
   weight: 30
   fantasy: 0
   civility: 40
-Serpent:
+serpent:
   weight: 20
   fantasy: 0
   civility: 50
-Lizard:
+lizard:
   weight: 30
   fantasy: 0
   civility: 30
-Turtle:
+turtle:
   weight: 20
   fantasy: 0
   civility: 50
-Tortoise:
+tortoise:
   weight: 30
   fantasy: 0
   civility: 50
-Frog:
+frog:
   weight: 20
   fantasy: 0
   civility: 30
-Toad:
+toad:
   weight: 20
   fantasy: 0
   civility: 30
-Cat:
+cat:
   weight: 40
   fantasy: 0
   civility: 40
-Dog:
+dog:
   weight: 40
   fantasy: 0
   civility: 40
-Wolf:
+wolf:
   weight: 30
   fantasy: 0
   civility: 20
-Ape:
+ape:
   weight: 25
   fantasy: 0
   civility: 45
-Bear:
+bear:
   weight: 35
   fantasy: 0
   civility: 25
-Boar:
+boar:
   weight: 30
   fantasy: 0
   civility: 20
-Hog:
+hog:
   weight: 25
   fantasy: 0
   civility: 30
-"#{race}-Folk":
+"#{race}-folk":
   weight: 10
   fantasy: 40
   civility: 70
-Rock-Folk:
+rock-folk:
   weight: 10
   fantasy: 50
   civility: 40
-Tree-Folk:
+tree-folk:
   weight: 40
   fantasy: 45
   civility: 70
@@ -122,11 +122,11 @@ Tree-Folk:
   weight: 80
   fantasy: 80
   civility: 50
-"#{element} Elemental":
+"#{element} elemental":
   weight: 30
   fantasy: 95
   civility: 50
-Slime:
+slime:
   weight: 30
   fantasy: 40
   civility: 30
@@ -134,11 +134,11 @@ Slime:
   weight: 35
   fantasy: 60
   civility: 30
-Ooze:
+ooze:
   weight: 20
   fantasy: 40
   civility: 20
-"#{element} Ooze":
+"#{element} ooze":
   weight: 25
   fantasy: 60
   civility: 20
@@ -146,43 +146,43 @@ Ooze:
   weight: 65
   fantasy: 70
   civility: 50
-Angel:
+angel:
   weight: 10
   fantasy: 15
   civility: 100
-Cherubim:
+cherubim:
   weight: 10
   fantasy: 25
   civility: 80
-Demon:
+demon:
   weight: 40
   fantasy: 25
   civility: 10
-Devil:
+devil:
   weight: 10
   fantasy: 15
   civility: 10
-Gnat:
+gnat:
   weight: 20
   fantasy: 0
   civility: 5
-Mosquito:
+mosquito:
   weight: 20
   fantasy: 0
   civility: 0
-Spider:
+spider:
   weight: 20
   fantasy: 0
   civility: 40
-Ant:
+ant:
   weight: 25
   fantasy: 0
   civility: 60
-Moth:
+moth:
   weight: 20
   fantasy: 0
   civility: 40
-Butterfly:
+butterfly:
   weight: 20
   fantasy: 0
   civility: 50
