@@ -1,4 +1,4 @@
-define(['utils', 'siteData'], ({ _, seedrandom, string }, siteData) => {
+define(['utils', 'siteData'], ({ _, random, string }, siteData) => {
   const { toNameCase, createBackOffGenerator } = string;
   
   // TODO get a proper name database
@@ -17,7 +17,7 @@ define(['utils', 'siteData'], ({ _, seedrandom, string }, siteData) => {
   const peopleNameLengthMaximum = 12;
   
   const createRandomPlaceName = () => {
-    const rng = new seedrandom();
+    const rng = random.createSource();
     return toNameCase(
       placeNameGenerator.create(rng, placeNameLengthMinimum, placeNameLengthMaximum)
     );
@@ -25,7 +25,7 @@ define(['utils', 'siteData'], ({ _, seedrandom, string }, siteData) => {
 
   const createSystem = (worldConfig) => {
     const createPeopleNameSource = () => { // TODO take a faction config?
-      const rng = new seedrandom(worldConfig.seed + 'name');
+      const rng = random.createSource(worldConfig.seed + 'name');
       
       const rootNames = [];
       for (let i = 0; i < 50; ++i) {
@@ -47,7 +47,7 @@ define(['utils', 'siteData'], ({ _, seedrandom, string }, siteData) => {
     };
 
     const createPlaceNameSource = () => { // TODO take a faction config?
-      const rng = new seedrandom(worldConfig.seed + 'name');
+      const rng = random.createSource(worldConfig.seed + 'name');
       
       const rootNames = [];
       for (let i = 0; i < 50; ++i) {

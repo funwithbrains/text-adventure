@@ -1,4 +1,4 @@
-define(['./imports/index', './math'], ({ _ }, { sample, sampleRange }) => {
+define(['./imports/index', './random'], ({ _ }, random) => {
   const toNameCase = (string) => {
     return string.replace(/(?:^|\s|-)([a-z])/g, (character) => {
       return character.toUpperCase();
@@ -44,13 +44,13 @@ define(['./imports/index', './math'], ({ _ }, { sample, sampleRange }) => {
       beginnings,
       table,
       create: (rng, minLength, maxLength) => {
-        const length = sampleRange(rng, minLength, maxLength);
-        let string = sample(rng, beginnings);
+        const length = rng.sampleRangeNormal(minLength, maxLength);
+        let string = rng.sampleList(beginnings);
         while (string.length < length) {
           const items = table[string.slice(-order)];
           if (!items) { break; }
 
-          string += sample(rng, items);
+          string += rng.sampleList(items);
         }
 
         return string;
@@ -64,22 +64,22 @@ define(['./imports/index', './math'], ({ _ }, { sample, sampleRange }) => {
     });
 
     const create = (rng, minLength, maxLength) => {
-      const length = sampleRange(rng, minLength, maxLength);
+      const length = rng.sampleRangeNormal(minLength, maxLength);
 
       let order = minOrder;
-      let string = sample(rng, sources[order - minOrder].beginnings);
+      let string = rng.sampleList(sources[order - minOrder].beginnings);
 
       while (string.length < length) {
         const source = sources[order - minOrder];
         const key = string.slice(-order);
 
         if (length - string.length <= order && source.endingTable[key]) {
-          string += sample(rng, source.endingTable[key]);
+          string += rng.sampleList(source.endingTable[key]);
         } else {
           const items = source.table[key];
           if (items) {
-            string += sample(rng, items);
-            if (order < maxOrder && rng.quick() < 0.5) { // TODO parameterize order escalation probability
+            string += rng.sampleList(items);
+            if (order < maxOrder && rng.sample() < 0.5) { // TODO parameterize order escalation probability
               order += 1;
             }
           } else {

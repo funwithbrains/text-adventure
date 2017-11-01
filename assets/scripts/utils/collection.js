@@ -20,7 +20,7 @@ define(['./imports/index'], ({ _ }) => {
 
     return {
       sample: (rng) => {
-        const weightedPosition = rng.double() * totalWeight;
+        const weightedPosition = rng.sample() * totalWeight;
         let passedWeight = 0;
         for (let i = 0; i < items.length; ++i) {
           passedWeight += items[i].weight;
@@ -46,7 +46,7 @@ define(['./imports/index'], ({ _ }) => {
 
     return {
       sample: (rng) => {
-        const weightedPosition = rng.double() * totalWeight;
+        const weightedPosition = rng.sample() * totalWeight;
         let passedWeight = 0;
         for (let i = 0; i < items.length; ++i) {
           passedWeight += items[i].weight;

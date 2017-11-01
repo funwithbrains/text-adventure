@@ -5,7 +5,7 @@ requirejs([
   // TEMP
   window.utils = utils;
   window.siteData = siteData;
-  window.rng = new utils.seedrandom('');
+  window.rng = utils.random.createSource('');
 
   const { ko, jQuery } = utils;
 

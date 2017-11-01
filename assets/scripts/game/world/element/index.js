@@ -1,7 +1,7 @@
 define([
   'utils', 'siteData'
 ], (
-  { _, seedrandom, collection }, siteData
+  { _, random, collection }, siteData
 ) => {
   const elementConfigs = siteData.game.world.elements;
   const { createWeightedSampler, createWeightedSamplerBucket } = collection;
@@ -15,9 +15,9 @@ define([
   }, {});
 
   const createSystem = (worldConfig) => {
-    const rng = new seedrandom(worldConfig.seed + 'element');
+    const rng = random.createSource(worldConfig.seed + 'element');
 
-    const elementCount = Math.floor(3 + rng.quick() * 5);
+    const elementCount = Math.floor(3 + rng.sampleNormal() * 5);
     const elementSampler = createElementSamplerBucket();
 
     const elementKeys = _.range(elementCount).map(() => {
