@@ -1,4 +1,4 @@
-define(['utils', './world/index'], ({ ko }, World) => {
+define(['utils', './world/index', './world/name/index'], ({ ko }, World, Name) => {
   const isPassable = room => {
     const type = room.type();
     if (type === 'water' || type === 'trench') {
@@ -15,7 +15,7 @@ define(['utils', './world/index'], ({ ko }, World) => {
       mode('gameplay');
     };
 
-    const seed = ko.observable('Earth');
+    const seed = ko.observable(Name.createRandomPlaceName());
     const world = ko.computed(() => {
       if (mode() !== 'gameplay') { return null; }
 
@@ -24,7 +24,7 @@ define(['utils', './world/index'], ({ ko }, World) => {
       });
     });
 
-    const position = ko.observable({ x: 0, y: 0});
+    const position = ko.observable({ x: 0, y: 0 });
     var lastMoveTime = 0;
     const moveDelay = 100;
     const move = (deltaX, deltaY) => {
