@@ -1,4 +1,4 @@
-$color-brightness-variance: 20%;
+$color-brightness-variance: 5%;
 $color-saturation-variance: 40%;
 $color-positive: #fff;
 $color-positive-faded: #888;
@@ -16,7 +16,7 @@ $color-primary-dark-desaturated: desaturate($color-primary-dark, $color-saturati
 
 $color-secondary: complement($color-primary);
 $color-secondary-light: lighten($color-secondary, $color-brightness-variance);
-$color-secondary-dark: darken($color-secondary, $color-brightness-variance);
+$color-secondary-light-desaturated: desaturate($color-secondary-light, $color-saturation-variance);$color-secondary-dark: darken($color-secondary, $color-brightness-variance);
 $color-secondary-dark-desaturated: desaturate($color-secondary-dark, $color-saturation-variance);
 
 $font-primary: Courier New, Courier, monospace;
