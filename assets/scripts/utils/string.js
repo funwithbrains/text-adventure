@@ -21,11 +21,11 @@ define(['./imports/index', './math'], ({ _ }, { sample, sampleRange }) => {
         table[key] += string[i + order];
       }
 
-      const endingKey = string.slice(-order - 1, -1);
+      const endingKey = string.slice(-order - order, -order);
       if (!endingTable[endingKey]) {
-        endingTable[endingKey] = '';
+        endingTable[endingKey] = [];
       }
-      endingTable[endingKey] += string[string.length - 1];
+      endingTable[endingKey].push(string.slice(-order));
     });
 
     return {
@@ -79,7 +79,7 @@ define(['./imports/index', './math'], ({ _ }, { sample, sampleRange }) => {
           const items = source.table[key];
           if (items) {
             string += sample(rng, items);
-            if (order < maxOrder) {
+            if (order < maxOrder && rng.quick() < 0.5) { // TODO parameterize order escalation probability
               order += 1;
             }
           } else {
