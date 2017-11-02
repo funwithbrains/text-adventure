@@ -5,12 +5,6 @@ define(['./imports/index'], ({ seedrandom }) => {
     return value;
   };
 
-  const sample = (rng, items) => {
-    return items[Math.floor(rng.quick() * items.length)];
-  };
-
-  const sampleRange = (rng, min, max) => min + Math.floor(rng.quick() * (max - min));
-
   const interpolateLinear = (a, b, t) => a + t * (b - a);
   const interpolateCubic = (a, b, t) => a + (3 - 2 * t) * t * t * (b - a);
 
@@ -76,8 +70,6 @@ define(['./imports/index'], ({ seedrandom }) => {
 
   return Object.freeze({
     clamp,
-    sample,
-    sampleRange,
 
     interpolateLinear,
     interpolateCubic,

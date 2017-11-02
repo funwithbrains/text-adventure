@@ -1,10 +1,10 @@
 define([
   'utils', 'siteData'
 ], (
-  { _, random, collection }, siteData
+  { _, random }, siteData
 ) => {
   const elementConfigs = siteData.game.world.elements;
-  const { createWeightedSampler, createWeightedSamplerBucket } = collection;
+  const { createWeightedSampler, createWeightedSamplerBucket } = random;
 
   const createElementSamplerBucket = () => {
     return createWeightedSamplerBucket(elementConfigs);

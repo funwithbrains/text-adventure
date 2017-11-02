@@ -1,5 +1,4 @@
-define(['utils', 'siteData'], ({ _, random, string, collection, math }, siteData) => {
-  const { sample } = math;
+define(['utils', 'siteData'], ({ _, math, random, string }, siteData) => {
   const { toNameCase } = string;
 
   const possibleRaces = _.map(siteData.game.world.races, ({
@@ -9,13 +8,13 @@ define(['utils', 'siteData'], ({ _, random, string, collection, math }, siteData
   }, name) => {
     return { name, weight, fantasy, civility };
   });
-  const fullSampler = collection.createWeightedSampler(possibleRaces);
+  const fullSampler = random.createWeightedSampler(possibleRaces);
   
   const finalizeRaceName = (rng, name, elementSystem) => {
     return name.replace(/#\{race\}/g, match => {
       return finalizeRaceName(rng, fullSampler.sample(rng).name, elementSystem);
     }).replace(/#\{element\}/g, match => {
-      return sample(rng, elementSystem.elementNames);
+      return rng.sample(elementSystem.elementNames);
     });
   };
 
@@ -61,7 +60,7 @@ define(['utils', 'siteData'], ({ _, random, string, collection, math }, siteData
         return Math.abs(race.civility - civility) < civilityDeviation;
       });
 
-      const localSampler = collection.createWeightedSampler(allowedRaces);
+      const localSampler = random.createWeightedSampler(allowedRaces);
 
       return {
         sample: (rng) => {
