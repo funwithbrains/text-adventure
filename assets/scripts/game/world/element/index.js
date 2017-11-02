@@ -15,15 +15,17 @@ define([
   }, {});
 
   const createSystem = (worldConfig) => {
-    const rng = random.createSource(worldConfig.seed + 'element');
+    const seed = worldConfig.seed + 'element';
+    const uniformRng = random.createSource(seed);
+    const normalRng = random.createSource(seed, random.distribution.normal);
 
-    const elementCount = Math.floor(3 + rng.sampleNormal() * 5);
+    const elementCount = normalRng.sampleIntRange(3, 8);
     const elementSampler = createElementSamplerBucket();
 
     const elementKeys = _.range(elementCount).map(() => {
-      return elementSampler.sample(rng).key;
+      return elementSampler.sample(uniformRng).key;
     });
-    const elementNames = elementKeys.map(key => elementNameSamplerMap[key].sample(rng).name);
+    const elementNames = elementKeys.map(key => elementNameSamplerMap[key].sample(uniformRng).name);
 
     // TODO preserve information about tendencies and opposites
 

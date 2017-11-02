@@ -35,36 +35,13 @@ define(['./imports/index', './random'], ({ _ }, random) => {
     };
   };
 
-  const createMarkovGenerator = (strings, order) => {
-    const { beginnings, table } = createMarkovSource(strings, order);
-
-    return {
-      strings,
-      order,
-      beginnings,
-      table,
-      create: (rng, minLength, maxLength) => {
-        const length = rng.sampleRangeNormal(minLength, maxLength);
-        let string = rng.sampleList(beginnings);
-        while (string.length < length) {
-          const items = table[string.slice(-order)];
-          if (!items) { break; }
-
-          string += rng.sampleList(items);
-        }
-
-        return string;
-      }
-    };
-  };
-
   const createBackOffGenerator = (strings, minOrder, maxOrder) => {
     const sources = _.range(minOrder, maxOrder + 1).map(order => {
       return createMarkovSource(strings, order);
     });
 
     const create = (rng, minLength, maxLength) => {
-      const length = rng.sampleRangeNormal(minLength, maxLength);
+      const length = rng.sampleIntRange(minLength, maxLength);
 
       let order = minOrder;
       let string = rng.sampleList(sources[order - minOrder].beginnings);
@@ -108,7 +85,6 @@ define(['./imports/index', './random'], ({ _ }, random) => {
 
   return {
     toNameCase,
-    createMarkovGenerator,
     createBackOffGenerator
   };
 });

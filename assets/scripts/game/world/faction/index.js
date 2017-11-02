@@ -13,13 +13,15 @@ define(['utils'], ({ _, random }) => {
   };
 
   const createSystem = (worldConfig, raceSystem) => {
-    const rng = random.createSource(worldConfig.seed + 'faction');
-    const wilderness = createFaction(rng, 30, 0, raceSystem);
+    const seed = worldConfig.seed + 'faction';
+    const uniformRng = random.createSource(seed);
+    const normalRng = random.createSource(seed, random.distribution.normal);
+    const wilderness = createFaction(uniformRng, 30, 0, raceSystem);
 
-    const civilizationCount = 1 + Math.floor(rng.sampleNormal() * 10);
+    const civilizationCount = normalRng.sampleIntRange(1, 10);
     const civilizations = _.range(civilizationCount).map(() => {
-      const diversity = rng.sampleIntRangeNormal(1, 5);
-      return createFaction(rng, diversity, 100, raceSystem);
+      const diversity = normalRng.sampleIntRange(1, 5);
+      return createFaction(uniformRng, diversity, 100, raceSystem);
     });
 
     return {

@@ -25,7 +25,7 @@ define(['utils', 'siteData'], ({ _, random, string, collection, math }, siteData
   const maximumCivility = 100;
 
   const rollSpread = (rng, min, max) => {
-    const midpointBase = rng.sampleNormal();
+    const midpointBase = rng.sample();
     const midpoint = midpointBase * midpointBase * (max - min);
     const radius = rng.sampleIntRange(min, max) * 0.75;
     return {
@@ -35,14 +35,14 @@ define(['utils', 'siteData'], ({ _, random, string, collection, math }, siteData
   };
   
   const createSystem = (worldConfig, elementSystem) => {
-    const rng = random.createSource(worldConfig.seed + 'race');
+    const rng = random.createSource(worldConfig.seed + 'race', random.distribution.normal);
 
     const {
       min: minFantasy,
       max: maxFantasy 
     } = rollSpread(rng, minimumFantasy, maximumFantasy);
 
-    const civilityDeviation = rng.sampleRangeNormal(minimumCivility, maximumCivility);
+    const civilityDeviation = rng.sampleRange(minimumCivility, maximumCivility);
 
     const races = possibleRaces.filter(race => {
       return minFantasy <= race.fantasy && race.fantasy <= maxFantasy;
