@@ -130,7 +130,7 @@ slime:
   weight: 30
   fantasy: 40
   civility: 30
-"#{element} Slime":
+"#{element} slime":
   weight: 35
   fantasy: 60
   civility: 30

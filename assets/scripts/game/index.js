@@ -28,13 +28,16 @@ define(['utils', './world/index', './world/name/index'], ({ ko }, World, Name) =
     var lastMoveTime = 0;
     const moveDelay = 100;
     const move = (deltaX, deltaY) => {
+      const w = world();
+      if (!w) { return; }
+
       const now = Date.now();
       if (lastMoveTime + moveDelay > now) { return; }
   
       const { x, y } = position();
       const destinationX = x + deltaX;
       const destinationY = y + deltaY;
-      const destinationRoom = world().roomSource.getRoomModel(destinationX, destinationY);
+      const destinationRoom = w.roomSource.getRoomModel(destinationX, destinationY);
   
       if (isPassable(destinationRoom)) {
         lastMoveTime = now;

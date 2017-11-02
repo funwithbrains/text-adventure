@@ -14,7 +14,7 @@ define(['utils', 'siteData'], ({ _, math, random, string }, siteData) => {
     return name.replace(/#\{race\}/g, match => {
       return finalizeRaceName(rng, fullSampler.sample(rng).name, elementSystem);
     }).replace(/#\{element\}/g, match => {
-      return rng.sample(elementSystem.elementNames);
+      return rng.sampleList(elementSystem.elementNames);
     });
   };
 
