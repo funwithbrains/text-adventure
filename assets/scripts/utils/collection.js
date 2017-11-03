@@ -1,5 +1,4 @@
 define(['./imports/index'], ({ _ }) => {
-
   const mapRange = (start, end, f) => {
     const result = [];
 
@@ -10,7 +9,23 @@ define(['./imports/index'], ({ _ }) => {
     return result;
   };
 
+  const createLazyTable = (f) => {
+    const table = {};
+
+    return {
+      get: (x, y) => {
+        const key = x + '|' + y;
+        if (!table[key]) {
+          table[key] = f(x, y);
+        }
+
+        return table[key];
+      }
+    };
+  };
+
   return {
-    mapRange
+    mapRange,
+    createLazyTable
   };
 });
