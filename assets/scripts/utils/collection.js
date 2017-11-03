@@ -1,7 +1,16 @@
 define(['./imports/index'], ({ _ }) => {
 
-  // TODO consider what would be useful general utils for collection processing
+  const mapRange = (start, end, f) => {
+    const result = [];
+
+    for (let i = start; i < end; ++i) {
+      result.push(f(i));
+    }
+
+    return result;
+  };
 
   return {
+    mapRange
   };
 });
