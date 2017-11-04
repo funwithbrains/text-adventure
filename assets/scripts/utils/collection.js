@@ -9,6 +9,19 @@ define(['./imports/index'], ({ _ }) => {
     return result;
   };
 
+  const filterMapRange = (start, end, f) => {
+    const result = [];
+
+    for (let i = start; i < end; ++i) {
+      const value = f(i);
+      if (value) {
+        result.push(value);
+      }
+    }
+
+    return result;
+  };
+
   const createLazyTable = (f) => {
     const table = {};
 
@@ -26,6 +39,7 @@ define(['./imports/index'], ({ _ }) => {
 
   return {
     mapRange,
+    filterMapRange,
     createLazyTable
   };
 });
