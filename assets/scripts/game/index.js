@@ -1,6 +1,6 @@
 define(['utils', './world/index', './world/name/index'], ({ ko }, World, Name) => {
   const isPassable = room => {
-    const type = room.type();
+    const { type } = room;
     if (type === 'water' || type === 'trench') {
       return false;
     }
@@ -37,7 +37,7 @@ define(['utils', './world/index', './world/name/index'], ({ ko }, World, Name) =
       const { x, y } = position();
       const destinationX = x + deltaX;
       const destinationY = y + deltaY;
-      const destinationRoom = w.roomSource.getRoomModel(destinationX, destinationY);
+      const destinationRoom = w.roomSource.getRoom(destinationX, destinationY);
   
       if (isPassable(destinationRoom)) {
         lastMoveTime = now;
@@ -54,7 +54,7 @@ define(['utils', './world/index', './world/name/index'], ({ ko }, World, Name) =
       if (!w) { return null; }
 
       const { x, y } = position();
-      return w.roomSource.getRoomModel(x, y);
+      return w.roomSource.getRoom(x, y);
     });
 
     const mapRange = 8;
@@ -74,7 +74,7 @@ define(['utils', './world/index', './world/name/index'], ({ ko }, World, Name) =
           if (i === x && j === y) {
             htmlMap += 'o';
           } else {
-            htmlMap += w.roomSource.getRoomModel(i, j).typeIcon();
+            htmlMap += w.roomSource.getRoom(i, j).typeIcon;
           }
         }
   

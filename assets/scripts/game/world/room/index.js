@@ -1,23 +1,64 @@
-define(['utils', './roomModel'], (utils, { createRoomModel }) => {
-  const { _, ko, math, jQuery } = utils;
+define(['utils'], ({ _, random, collection }) => {
+  const { createLazyTable } = collection;
 
-  const createSource = (worldConfig) => {
-    const savedRoomModels = {};
-    const getRoomModel = (x, y) => {
-      // TODO load from long-saved data
-      const roomIndex = x + ',' + y;
-      const savedRoomModel = savedRoomModels[roomIndex];
-      if (savedRoomModel) {
-        return savedRoomModel;
-      }
-  
-      return (
-        savedRoomModels[roomIndex] = createRoomModel(x, y, {}, worldConfig)
-      );
-    };
+  const typeIconMap = Object.freeze({
+    'water': '~',
+    'land': '&nbsp;',
+    'hill': 'h'
+  });
+
+  const zoom = 16;
+  const radius = 32;
+  const radiusSquared = radius * radius;
+
+  const computeElevation = (rng, x, y) => {
+    return rng.createSubSource('elevation').getNoiseField(x * zoom, y * zoom) * (
+      1 - (x*x + y*y) / radiusSquared
+    );
+  };
+
+  const computeTemperature = (rng, x, y, elevation) => {
+    return (
+      (1 - elevation) + 3 * rng.createSubSource('temperature').getNoiseField(x, y)
+    ) / 4;
+  };
+
+  const computeHumidity = (rng, x, y, elevation) => {
+    return (
+      (1 - elevation) + rng.createSubSource('humidity').getNoiseField(x, y)
+    ) / 2;
+  };
+
+  const computeRoomType = (e, t, h) => {
+    return e < 0.3 ? 'water' : e < 0.60 ? 'land' : 'hill';
+  };
+
+  const createRoom = (parentRng, x, y) => {
+    const rng = parentRng.createSubSource('room');
+
+    const elevation = computeElevation(rng, x, y);
+    const temperature = computeTemperature(rng, x, y, elevation);
+    const humidity = computeHumidity(rng, x, y, elevation);
+    const type = computeRoomType(elevation); // TODO temperature & humidity
+    const typeIcon = typeIconMap[type];
 
     return {
-      getRoomModel
+      elevation,
+      temperature,
+      humidity,
+      type,
+      typeIcon
+    };
+  };
+
+  const createSource = (worldConfig) => {
+    const rng = random.createSource(worldConfig.seed + 'room');
+    const roomTable = createLazyTable((x, y) => createRoom(rng, x, y));
+
+    const getRoom = roomTable.get;
+
+    return {
+      getRoom
     };
   };
 
