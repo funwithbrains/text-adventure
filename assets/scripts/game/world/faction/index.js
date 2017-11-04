@@ -1,9 +1,9 @@
-define(['utils'], ({ _, random }) => {
+define(['utils'], ({ _, random, collection }) => {
   const createFaction = (rng, diversity, civility, raceSystem) => {
     // TODO select faction ideology based on diversity and civility
     const raceSampler = raceSystem.createSampler(civility);
     
-    const races = _.range(diversity).map(() => {
+    const races = collection.mapRange(0, diversity, () => {
       return raceSampler.sample(rng);
     });
 
@@ -19,7 +19,7 @@ define(['utils'], ({ _, random }) => {
     const wilderness = createFaction(uniformRng, 30, 0, raceSystem);
 
     const civilizationCount = normalRng.sampleIntRange(1, 10);
-    const civilizations = _.range(civilizationCount).map(() => {
+    const civilizations = collection.mapRange(0, civilizationCount, () => {
       const diversity = normalRng.sampleIntRange(1, 5);
       return createFaction(uniformRng, diversity, 100, raceSystem);
     });

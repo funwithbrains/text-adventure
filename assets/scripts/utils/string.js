@@ -1,4 +1,4 @@
-define(['./imports/index', './random'], ({ _ }, random) => {
+define(['./imports/index', './random', './collection'], ({ _ }, random, collection) => {
   const toNameCase = (string) => {
     return string.replace(/(?:^|\s|-)([a-z])/g, (character) => {
       return character.toUpperCase();
@@ -36,7 +36,7 @@ define(['./imports/index', './random'], ({ _ }, random) => {
   };
 
   const createBackOffGenerator = (strings, minOrder, maxOrder) => {
-    const sources = _.range(minOrder, maxOrder + 1).map(order => {
+    const sources = collection.mapRange(minOrder, maxOrder + 1, order => {
       return createMarkovSource(strings, order);
     });
 
@@ -70,7 +70,7 @@ define(['./imports/index', './random'], ({ _ }, random) => {
     };
 
     const createList = (rng, minLength, maxLength, count) => {
-      return _.range(count).map(() => create(rng, minLength, maxLength));
+      return collection.mapRange(0, count, () => create(rng, minLength, maxLength));
     };
 
     return {

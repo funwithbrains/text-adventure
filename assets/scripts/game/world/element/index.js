@@ -1,7 +1,7 @@
 define([
   'utils', 'siteData'
 ], (
-  { _, random }, siteData
+  { _, random, collection }, siteData
 ) => {
   const elementConfigs = siteData.game.world.elements;
   const { createWeightedSampler, createWeightedSamplerBucket } = random;
@@ -22,7 +22,7 @@ define([
     const elementCount = normalRng.sampleIntRange(3, 8);
     const elementSampler = createElementSamplerBucket();
 
-    const elementKeys = _.range(elementCount).map(() => {
+    const elementKeys = collection.mapRange(0, elementCount, () => {
       return elementSampler.sample(uniformRng).key;
     });
     const elementNames = elementKeys.map(key => elementNameSamplerMap[key].sample(uniformRng).name);
