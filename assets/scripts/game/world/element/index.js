@@ -14,10 +14,12 @@ define([
     return memo;
   }, {});
 
-  const createSystem = (worldConfig) => {
-    const seed = worldConfig.seed + 'element';
-    const uniformRng = random.createSource(seed);
-    const normalRng = random.createSource(seed, random.distribution.normal);
+  const createSystem = ({
+    worldRng,
+    worldConfig
+  }) => {
+    const uniformRng = worldRng.createSubSource('elementUniform');
+    const normalRng = worldRng.createSubSource('elementNormal', random.distribution.normal);
 
     const elementCount = normalRng.sampleIntRange(3, 8);
     const elementSampler = createElementSamplerBucket();

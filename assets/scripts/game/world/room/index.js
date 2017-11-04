@@ -33,9 +33,7 @@ define(['utils'], ({ _, random, collection }) => {
     return e < 0.3 ? 'water' : e < 0.60 ? 'land' : 'hill';
   };
 
-  const createRoom = (parentRng, x, y) => {
-    const rng = parentRng.createSubSource('room');
-
+  const createRoom = (rng, x, y) => {
     const elevation = computeElevation(rng, x, y);
     const temperature = computeTemperature(rng, x, y, elevation);
     const humidity = computeHumidity(rng, x, y, elevation);
@@ -51,8 +49,11 @@ define(['utils'], ({ _, random, collection }) => {
     };
   };
 
-  const createSource = (worldConfig) => {
-    const rng = random.createSource(worldConfig.seed + 'room');
+  const createSource = ({
+    worldRng,
+    worldConfig
+  }) => {
+    const rng = worldRng.createSubSource('room');
     const roomTable = createLazyTable((x, y) => createRoom(rng, x, y));
 
     const getRoom = roomTable.get;

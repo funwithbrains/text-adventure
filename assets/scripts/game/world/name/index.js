@@ -23,9 +23,12 @@ define(['utils', 'siteData'], ({ _, random, string }, siteData) => {
     );
   };
 
-  const createSystem = (worldConfig) => {
+  const createSystem = ({
+    worldRng,
+    worldConfig
+  }) => {
     const createPeopleNameSource = () => { // TODO take a faction config?
-      const rng = random.createSource(worldConfig.seed + 'name');
+      const rng = worldRng.createSubSource('namePeople');
       
       const rootNames = [];
       for (let i = 0; i < 50; ++i) {
@@ -33,8 +36,9 @@ define(['utils', 'siteData'], ({ _, random, string }, siteData) => {
           peopleNameGenerator.create(rng, peopleNameLengthMinimum, peopleNameLengthMaximum)
         );
       }
+
       const localGenerator = createBackOffGenerator(rootNames, 2, 5);
-  
+
       return {
         localGenerator,
         roll: (rng) => {
@@ -47,7 +51,7 @@ define(['utils', 'siteData'], ({ _, random, string }, siteData) => {
     };
 
     const createPlaceNameSource = () => { // TODO take a faction config?
-      const rng = random.createSource(worldConfig.seed + 'name');
+      const rng = worldRng.createSubSource('namePlace');
       
       const rootNames = [];
       for (let i = 0; i < 50; ++i) {
@@ -69,7 +73,7 @@ define(['utils', 'siteData'], ({ _, random, string }, siteData) => {
         }
       };
     };
-  
+
     return {
       createPeopleNameSource,
       createPlaceNameSource

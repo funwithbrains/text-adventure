@@ -9,7 +9,7 @@ define(['utils', 'siteData'], ({ _, math, random, string }, siteData) => {
     return { name, weight, fantasy, civility };
   });
   const fullSampler = random.createWeightedSampler(possibleRaces);
-  
+
   const finalizeRaceName = (rng, name, elementSystem) => {
     return name.replace(/#\{race\}/g, match => {
       return finalizeRaceName(rng, fullSampler.sample(rng).name, elementSystem);
@@ -32,9 +32,13 @@ define(['utils', 'siteData'], ({ _, math, random, string }, siteData) => {
       max: Math.min(max, Math.floor(midpoint + radius))
     };
   };
-  
-  const createSystem = (worldConfig, elementSystem) => {
-    const rng = random.createSource(worldConfig.seed + 'race', random.distribution.normal);
+
+  const createSystem = ({
+    worldRng,
+    worldConfig,
+    elementSystem
+  }) => {
+    const rng = worldRng.createSubSource('race', random.distribution.normal);
 
     const {
       min: minFantasy,
@@ -53,7 +57,7 @@ define(['utils', 'siteData'], ({ _, math, random, string }, siteData) => {
     const maxCivility = races.reduce((memo, race) => {
       return memo > race.civility ? memo : race.civility;
     }, minimumCivility);
-    
+
     const createSamplerBucket = (civility) => {
       civility = math.clamp(minCivility, maxCivility, civility);
       const allowedRaces = races.filter(race => {
