@@ -1,9 +1,11 @@
 define(['utils'], ({ _, random, collection }) => {
   const createFaction = (rng, diversity, civility, raceSystem) => {
     // TODO select faction ideology based on diversity and civility
-    const raceSampler = raceSystem.createSampler(civility);
+    const raceSampler = raceSystem.createSamplerBucket(civility);
     
-    const races = collection.mapRange(0, diversity, () => {
+    // TODO allow replacement of compound races for re-selection from bucket
+    // OR when selecting one, allow it to be duplicated immediately with different components
+    const races = collection.filterMapRange(0, diversity, () => {
       return raceSampler.sample(rng);
     });
 

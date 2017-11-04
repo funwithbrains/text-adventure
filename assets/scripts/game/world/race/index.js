@@ -54,18 +54,21 @@ define(['utils', 'siteData'], ({ _, math, random, string }, siteData) => {
       return memo > race.civility ? memo : race.civility;
     }, minimumCivility);
     
-    const createSampler = (civility) => {
+    const createSamplerBucket = (civility) => {
       civility = math.clamp(minCivility, maxCivility, civility);
       const allowedRaces = races.filter(race => {
         return Math.abs(race.civility - civility) < civilityDeviation;
       });
 
-      const localSampler = random.createWeightedSampler(allowedRaces);
+      const localSampler = random.createWeightedSamplerBucket(allowedRaces);
 
       return {
         sample: (rng) => {
           // TODO get other properties, not just name
-          return toNameCase(finalizeRaceName(rng, localSampler.sample(rng).name, elementSystem));
+          const race = localSampler.sample(rng);
+          if (!race) { return null; }
+
+          return toNameCase(finalizeRaceName(rng, race.name, elementSystem));
         }
       };
     };
@@ -74,7 +77,7 @@ define(['utils', 'siteData'], ({ _, math, random, string }, siteData) => {
       minFantasy,
       maxFantasy,
       races,
-      createSampler
+      createSamplerBucket
     };
   };
 
